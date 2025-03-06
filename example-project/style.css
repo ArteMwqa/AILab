@@ -82,7 +82,7 @@ button:hover {
 }
 
 footer {
-    position: sticky;
+    position: absolute;
     background: #000000;
     color: white;
     text-align: center;
