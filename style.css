@@ -93,6 +93,64 @@ button:hover {
     pointer-events: none;
     color: #0056b3;
 }
+.cell.x {
+    color: #0056b3;
+}
+
+.cell.circle {
+    color: #d9534f;
+}
+.winning-line {
+    position: absolute;
+    height: 5px;
+    background-color: transparent;
+    transform-origin: left center;
+    z-index: 10;
+}
+
+.winning-line.x {
+    background-color: blue;
+}
+
+.winning-line.circle {
+    background-color: red;
+}
+
+.winner-container {
+    display: none; /* Приховано за замовчуванням */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 20;
+    text-align: center;
+}
+
+.winner-message {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.reset-button {
+    padding: 10px 20px;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.reset-button:hover {
+    background-color: #004494;
+}
 footer {
     background-color: #000;
     opacity: 0.7;
