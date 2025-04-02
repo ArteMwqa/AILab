@@ -59,14 +59,67 @@ button {
 button:hover {
     background-color: #004494;
 }
-.tic-tac-toe-container {
+
+.tic-tac-toe-menu {
     position: fixed;
     top: 50%;
     right: 20px;
     transform: translateY(-50%);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.tic-tac-toe-toggle {
+    background-color: rgba(211, 211, 211, 0.7); /* Світло-сірий із прозорістю */
+    color: transparent; /* Текст приховано */
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 10px;
+    position: relative;
+    width: 50px;
+    height: 50px;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.tic-tac-toe-toggle:active {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.tic-tac-toe-toggle::before,
+.tic-tac-toe-toggle::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+    border-radius: 50%;
+}
+
+.tic-tac-toe-toggle::before {
+    border: 3px solid blue; /* Половина хрестика */
+    border-right: none;
+    border-bottom: none;
+    transform: translate(50%, 50%);
+}
+
+.tic-tac-toe-toggle::after {
+    border: 3px solid red; /* Половина нулика */
+    border-left: none;
+    border-top: none;
+    transform: translate(50%, 50%);
+}
+
+.tic-tac-toe-container {
+    display: none; /* Приховано за замовчуванням */
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 .tic-tac-toe {

@@ -1,8 +1,10 @@
 const cells = document.querySelectorAll('[data-cell]');
 const ticTacToe = document.querySelector('.tic-tac-toe');
-const resetButton = document.querySelector('.reset-button');
 const winnerContainer = document.querySelector('.winner-container');
 const winnerMessage = document.querySelector('.winner-message');
+const ticTacToeContainer = document.querySelector('.tic-tac-toe-container');
+const toggleButton = document.querySelector('.tic-tac-toe-toggle');
+const resetButton = document.querySelector('.reset-button'); // Додано пошук кнопки перезапуску
 let isCircleTurn = false;
 
 const WINNING_COMBINATIONS = [
@@ -24,6 +26,12 @@ const checkWin = (currentClass) => {
     });
 };
 
+const isDraw = () => {
+    return [...cells].every(cell => {
+        return cell.classList.contains('x') || cell.classList.contains('circle');
+    });
+};
+
 const handleClick = (e) => {
     const cell = e.target;
     const currentClass = isCircleTurn ? 'circle' : 'x';
@@ -34,6 +42,11 @@ const handleClick = (e) => {
     if (winningCombination) {
         drawWinningLine(winningCombination, currentClass);
         showWinnerMessage(currentClass);
+        return;
+    }
+
+    if (isDraw()) {
+        showDrawMessage();
         return;
     }
 
@@ -69,6 +82,11 @@ const showWinnerMessage = (currentClass) => {
     winnerContainer.style.display = 'flex';
 };
 
+const showDrawMessage = () => {
+    winnerMessage.textContent = 'Нічия!';
+    winnerContainer.style.display = 'flex';
+};
+
 const resetGame = () => {
     cells.forEach(cell => {
         cell.classList.remove('x', 'circle');
@@ -82,8 +100,14 @@ const resetGame = () => {
     isCircleTurn = false;
 };
 
+toggleButton.addEventListener('click', () => {
+    const isHidden = ticTacToeContainer.style.display === 'none' || !ticTacToeContainer.style.display;
+    ticTacToeContainer.style.display = isHidden ? 'flex' : 'none';
+    toggleButton.textContent = isHidden ? '▼' : '▶';
+});
+
+resetButton.addEventListener('click', resetGame); // Додано обробник події для кнопки перезапуску
+
 cells.forEach(cell => {
     cell.addEventListener('click', handleClick, { once: true });
 });
-
-resetButton.addEventListener('click', resetGame);
