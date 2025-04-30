@@ -35,9 +35,13 @@ const isDraw = () => {
 const handleClick = (e) => {
     const cell = e.target;
     const currentClass = isCircleTurn ? 'circle' : 'x';
+
+    // Додаємо клас для поточного ходу
     cell.classList.add(currentClass);
     cell.textContent = isCircleTurn ? 'O' : 'X';
+    cell.style.color = isCircleTurn ? '#d9534f' : '#0056b3'; // Червоний для нуликів, синій для хрестиків
 
+    // Перевіряємо на перемогу
     const winningCombination = checkWin(currentClass);
     if (winningCombination) {
         drawWinningLine(winningCombination, currentClass);
@@ -45,11 +49,13 @@ const handleClick = (e) => {
         return;
     }
 
+    // Перевіряємо на нічию
     if (isDraw()) {
         showDrawMessage();
         return;
     }
 
+    // Змінюємо чергу
     isCircleTurn = !isCircleTurn;
 };
 
@@ -70,10 +76,16 @@ const drawWinningLine = (combination, currentClass) => {
     const y2 = endRect.top + endRect.height / 2 - containerRect.top;
 
     const angle = Math.atan2(y2 - y1, x2 - x1) * (180 / Math.PI);
-    const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+    const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2) + 4; // Зменшено довжину на 100 пікселів
+
+    // Якщо виграш по вертикалі, зміщуємо лінію направо на 2 пікселі
+    const isVerticalWin = Math.abs(x2 - x1) < 1;
+    const isHorizontalWin = Math.abs(y2 - y1) < 1;
+    const xOffset = isVerticalWin ? 0 : -2; // Направо для вертикалі, вліво для інших
+    const yOffset = isHorizontalWin ? -3.3 : -5; // Нижче для горизонталі, стандартне для інших
 
     line.style.width = `${length}px`;
-    line.style.transform = `translate(${x1}px, ${y1}px) rotate(${angle}deg)`;
+    line.style.transform = `translate(${x1 + xOffset}px, ${y1 + yOffset}px) rotate(${angle}deg)`; // Зміщення залежно від типу виграшу
     ticTacToe.appendChild(line);
 };
 
@@ -91,11 +103,12 @@ const resetGame = () => {
     cells.forEach(cell => {
         cell.classList.remove('x', 'circle');
         cell.textContent = '';
+        cell.style.color = ''; // Скидаємо колір
         cell.removeEventListener('click', handleClick);
         cell.addEventListener('click', handleClick, { once: true });
     });
-    const line = document.querySelector('.winning-line');
-    if (line) line.remove();
+    const lines = document.querySelectorAll('.winning-line');
+    lines.forEach(line => line.remove()); // Видаляємо всі лінії
     winnerContainer.style.display = 'none';
     isCircleTurn = false;
 };

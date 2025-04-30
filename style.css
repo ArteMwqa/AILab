@@ -83,36 +83,9 @@ button:hover {
     width: 50px;
     height: 50px;
     transition: background-color 0.3s ease, opacity 0.3s ease;
-}
-
-.tic-tac-toe-toggle:active {
-    background-color: rgba(0, 0, 0, 0.5) !important;
-}
-
-.tic-tac-toe-toggle::before,
-.tic-tac-toe-toggle::after {
-    content: '';
-    position: absolute;
-    width: 50%;
-    height: 50%;
-    top: 0;
-    left: 0;
-    background-color: transparent;
-    border-radius: 50%;
-}
-
-.tic-tac-toe-toggle::before {
-    border: 3px solid blue; /* Половина хрестика */
-    border-right: none;
-    border-bottom: none;
-    transform: translate(50%, 50%);
-}
-
-.tic-tac-toe-toggle::after {
-    border: 3px solid red; /* Половина нулика */
-    border-left: none;
-    border-top: none;
-    transform: translate(50%, 50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .tic-tac-toe-container {
@@ -137,9 +110,11 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 24px;
+    font-size: 3rem; /* Уніфікований розмір для хрестиків і нуликів */
     font-weight: bold;
     cursor: pointer;
+    line-height: 1; /* Однакова висота рядка для вирівнювання */
+    font-family: 'Courier New', Courier, monospace; /* Моноширинний шрифт для рівних хрестиків */
 }
 
 .cell.taken {
@@ -155,7 +130,7 @@ button:hover {
 }
 .winning-line {
     position: absolute;
-    height: 5px;
+    height: 5px; /* Збільшено товщину лінії виграшу */
     background-color: transparent;
     transform-origin: left center;
     z-index: 10;
